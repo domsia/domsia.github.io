@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>domsia</title>
+  <title>domsia 的不日常更新</title>
   <subtitle>liu0218dong blog site</subtitle>
   <link href="/atom.xml" rel="self"/>
   
@@ -59,6 +59,49 @@
   </entry>
   
   <entry>
+    <title>docker swarm and weaveworks 搭建分布式容器环境</title>
+    <link href="http://blog.domsia.com/2017/06/docker-swarm-and-weave/"/>
+    <id>http://blog.domsia.com/2017/06/docker-swarm-and-weave/</id>
+    <published>2017-06-29T15:38:38.139Z</published>
+    <updated>2017-06-28T15:56:19.890Z</updated>
+    
+    <content type="html"><![CDATA[<ol>
+<li><p><strong>理念</strong><br><a href="https://github.com/docker/swarm" target="_blank" rel="external"> Docker Swarm</a> 是docker官方一个用于创建Docker主机（运行Docker守护进程的服务器）集群的工具。相对于<a href="https://kubernetes.io/" target="_blank" rel="external">kubernetes</a> ，其概念较少，无需额外安装，能够满足很多场景的需求。但是docker集群的网络通信是一件非常复杂的事，对应用隔离以及物理机通信要求较高，本环境使用了<a href="https://www.weave.works" target="_blank" rel="external">weaveworks</a> 管理和解析网络。<br>在docker集群中，需要做到一个应用的所有服务位于同一局域网内，而于其他服务之间是相互隔离的，同时物理机与物理机之间也应具有相同的应用网络结构，才能使不同机器上的同一应用处在同一通信网络下面，从而实现分布式的功能。</p>
+</li>
+<li><p><strong>环境搭建</strong> </p>
+</li>
+</ol>
+<ul>
+<li><p>docker 安装<br>在host1机器上安装较新版本的docker，自带docker swarm. 若docker版本较老需要自己升级或者手动安装。若命令 <code>docker swarm</code>存在，则说明安装成功。本次使用的docker版本是<code>17.05.0-ce</code> </p>
+</li>
+<li><p>安装weaveworks插件<br>在host1机器上运行<code>docker plugin install weaveworks/net-plugin</code> ,可能需要sudo权限。安装过程会拉取docker镜像。完成之后，使用<code>docker plugin ls</code> 检查是否安装成功。插件会自动处于enabled的状态。  </p>
+</li>
+<li><p>host2机器的安装配置<br>在host2机器上同样进行上两步操作。  </p>
+</li>
+<li><p>创建集群节点<br>将host1机器做为manager，执行<code>docker swarm init</code> 若本地外网IP较多，需要添加 <code>--advertise-addr IP</code>参数选择一个外网的IP（错误提示会指出）。若初始化成功，会生成一段提示  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">To add a worker to this swarm, run the following command:</div><div class="line"></div><div class="line"> docker swarm join \</div><div class="line">  --token    SWMTKN-1-2msed5ddrd4tmzitijhcn6w040h8hh1gntmxhtc2ugqv3c31t7-1fo2fpnyiu8hq4seqan7d9zcm \</div><div class="line">  192.168.0.109:2377</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>下面这段命令便是将其他物理机作为worker节点添加到集群的方法。使用<code>docker node ls</code>查看集群节点状态，发现目前只有一个manager节点。在host2上执行上述添加命令，成功后。在host1上再次查看节点状态，发现有两个节点了，并且两个节点都处于ready的状态，即节点添加成功。 </p>
+<ul>
+<li><p>创建网络<br>使用<code>docker network ls</code>查看当前docker可使用的网络连接。我们需要创建weaveworks为我们管理的网络连接方式。执行<code>docker network create -d weaveworks/net-plugin:latest  distributed_default</code> 创建了名额为 distributed_default的网络。在启动服务的时候，我们需要指定使用此网络连接方式。在这里每个通过weaveworks创建的网络之间都是相互隔离的，保证了应用之间的隔离性。</p>
+</li>
+<li><p>启动服务<br>我们这里启动一个最简单的nginx服务，<code>docker service create --network distributed_default --replicas 4 nginx</code>会启动一个有4个task的集群服务。使用<code>docker ps</code>查看发现host1上出现了两个nginx镜像产生的容器。同样在host2也部署了两个nginx的容器，共4个.在host2上，查看网络发现多了一个叫distributed_default的网络结构名。至此，一个最简单的双机系统洁本结构已经完成，接下来就需要进行一些测试和评估了.</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;理念&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/docker/swarm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt; Docker Swarm&lt;/a&gt; 是docker官方一个用于创
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
     <title>hexo+github 搭建blog的过程碰到的问题</title>
     <link href="http://blog.domsia.com/2017/06/hexo-problems/"/>
     <id>http://blog.domsia.com/2017/06/hexo-problems/</id>
@@ -106,49 +149,6 @@
     <summary type="html">
     
       &lt;h3 id=&quot;1-域名解析&quot;&gt;&lt;a href=&quot;#1-域名解析&quot; class=&quot;headerlink&quot; title=&quot;1. 域名解析&quot;&gt;&lt;/a&gt;1. &lt;strong&gt;域名解析&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;本人的域名是万网上注册的，所以域名解析也就用阿里云的了。但是因为之前做
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>docker swarm and weaveworks 搭建分布式容器环境</title>
-    <link href="http://blog.domsia.com/2017/06/docker-swarm-and-weave/"/>
-    <id>http://blog.domsia.com/2017/06/docker-swarm-and-weave/</id>
-    <published>2017-06-29T15:38:38.139Z</published>
-    <updated>2017-06-28T15:56:19.890Z</updated>
-    
-    <content type="html"><![CDATA[<ol>
-<li><p><strong>理念</strong><br><a href="https://github.com/docker/swarm" target="_blank" rel="external"> Docker Swarm</a> 是docker官方一个用于创建Docker主机（运行Docker守护进程的服务器）集群的工具。相对于<a href="https://kubernetes.io/" target="_blank" rel="external">kubernetes</a> ，其概念较少，无需额外安装，能够满足很多场景的需求。但是docker集群的网络通信是一件非常复杂的事，对应用隔离以及物理机通信要求较高，本环境使用了<a href="https://www.weave.works" target="_blank" rel="external">weaveworks</a> 管理和解析网络。<br>在docker集群中，需要做到一个应用的所有服务位于同一局域网内，而于其他服务之间是相互隔离的，同时物理机与物理机之间也应具有相同的应用网络结构，才能使不同机器上的同一应用处在同一通信网络下面，从而实现分布式的功能。</p>
-</li>
-<li><p><strong>环境搭建</strong> </p>
-</li>
-</ol>
-<ul>
-<li><p>docker 安装<br>在host1机器上安装较新版本的docker，自带docker swarm. 若docker版本较老需要自己升级或者手动安装。若命令 <code>docker swarm</code>存在，则说明安装成功。本次使用的docker版本是<code>17.05.0-ce</code> </p>
-</li>
-<li><p>安装weaveworks插件<br>在host1机器上运行<code>docker plugin install weaveworks/net-plugin</code> ,可能需要sudo权限。安装过程会拉取docker镜像。完成之后，使用<code>docker plugin ls</code> 检查是否安装成功。插件会自动处于enabled的状态。  </p>
-</li>
-<li><p>host2机器的安装配置<br>在host2机器上同样进行上两步操作。  </p>
-</li>
-<li><p>创建集群节点<br>将host1机器做为manager，执行<code>docker swarm init</code> 若本地外网IP较多，需要添加 <code>--advertise-addr IP</code>参数选择一个外网的IP（错误提示会指出）。若初始化成功，会生成一段提示  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">To add a worker to this swarm, run the following command:</div><div class="line"></div><div class="line"> docker swarm join \</div><div class="line">  --token    SWMTKN-1-2msed5ddrd4tmzitijhcn6w040h8hh1gntmxhtc2ugqv3c31t7-1fo2fpnyiu8hq4seqan7d9zcm \</div><div class="line">  192.168.0.109:2377</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>下面这段命令便是将其他物理机作为worker节点添加到集群的方法。使用<code>docker node ls</code>查看集群节点状态，发现目前只有一个manager节点。在host2上执行上述添加命令，成功后。在host1上再次查看节点状态，发现有两个节点了，并且两个节点都处于ready的状态，即节点添加成功。 </p>
-<ul>
-<li><p>创建网络<br>使用<code>docker network ls</code>查看当前docker可使用的网络连接。我们需要创建weaveworks为我们管理的网络连接方式。执行<code>docker network create -d weaveworks/net-plugin:latest  distributed_default</code> 创建了名额为 distributed_default的网络。在启动服务的时候，我们需要指定使用此网络连接方式。在这里每个通过weaveworks创建的网络之间都是相互隔离的，保证了应用之间的隔离性。</p>
-</li>
-<li><p>启动服务<br>我们这里启动一个最简单的nginx服务，<code>docker service create --network distributed_default --replicas 4 nginx</code>会启动一个有4个task的集群服务。使用<code>docker ps</code>查看发现host1上出现了两个nginx镜像产生的容器。同样在host2也部署了两个nginx的容器，共4个.在host2上，查看网络发现多了一个叫distributed_default的网络结构名。至此，一个最简单的双机系统洁本结构已经完成，接下来就需要进行一些测试和评估了.</p>
-</li>
-</ul>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;理念&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/docker/swarm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt; Docker Swarm&lt;/a&gt; 是docker官方一个用于创
     
     </summary>
     
