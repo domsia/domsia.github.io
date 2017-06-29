@@ -1,0 +1,45 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title> hexo+github 搭建blog的过程碰到的问题 · domsia</title><meta name="description" content="hexo+github 搭建blog的过程碰到的问题 - domsia"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/favicon.png"><link rel="stylesheet" href="/css/apollo.css"><link rel="search" type="application/opensearchdescription+xml" href="http://blog.domsia.com/atom.xml" title="domsia"></head><body><div class="wrap"><header><a href="/" class="logo-link"><img src="/favicon.png" alt="logo"></a><ul class="nav nav-list"><li class="nav-list-item"><a href="/" target="_self" class="nav-list-link">BLOG</a></li><li class="nav-list-item"><a href="/archives/" target="_self" class="nav-list-link">ARCHIVE</a></li><li class="nav-list-item"><a href="http://weibo.com/" target="_blank" class="nav-list-link">WEIBO</a></li><li class="nav-list-item"><a href="https://github.com/domsia" target="_blank" class="nav-list-link">GITHUB</a></li><li class="nav-list-item"><a href="/atom.xml" target="_self" class="nav-list-link">RSS</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">hexo+github 搭建blog的过程碰到的问题</h1><div class="post-info">Jun 29, 2017</div><div class="post-content"><h3 id="1-域名解析"><a href="#1-域名解析" class="headerlink" title="1. 域名解析"></a>1. <strong>域名解析</strong></h3><p>本人的域名是万网上注册的，所以域名解析也就用阿里云的了。但是因为之前做过一次对 <code>github.io</code>的解析，用A解析到 github的ip，是直接解析的顶级域名，当时只是做了一个简单的页面，试了一下效果。这次准备用<code>hexo</code> 搭一个可用的博客。按照文档安装配置发布花了不到10分钟时间。但是之后就发现，hexo在配置了git地址之后会删除原来的仓库再新建一个，还好原来的里面也没什么重要信息。之后在修改调试中也发现，每次deploy的时候，会强制push覆盖远程仓库，这个也感觉是个隐患。还是说域名解析的问题，先看配置：</p>
+<table>
+<thead>
+<tr>
+<th>记录类型</th>
+<th style="text-align:center">主机记录</th>
+<th style="text-align:right">解析线路(运营商)</th>
+<th>记录值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNAME</td>
+<td style="text-align:center">blog</td>
+<td style="text-align:right">默认</td>
+<td>domsia.github.io</td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td style="text-align:center">@</td>
+<td style="text-align:right">默认</td>
+<td>domsia.github.io</td>
+</tr>
+</tbody>
+</table>
+<p>配置完成几分钟后，便可以查看了，打开 <a href="blog.domsia.com">blog.domsia.com</a>没有问题，但是在用 domsia.com 访问的时候却发现还是以前的页面(需要修改repo的custom domain， 怀疑是github server 缓存的原因，也没有再查原因，所以blog的地址就暂定为 blog.domsia.com .</p>
+<h3 id="2-hexo-deploy-的问题"><a href="#2-hexo-deploy-的问题" class="headerlink" title="2.  hexo deploy 的问题"></a>2.  <strong>hexo deploy 的问题</strong></h3><p>之前提到在每次的deploy的时候的强制覆盖问题，这里还引起了另一个问题，就是在repo的设置的<code>custom domain</code>  会被清空，这就需要每发布一次设置一次，这十分不友好。还好git还提供了另一种域名绑定策略，那就是添加一个 <code>CNAME</code> 文件，在里面只需要写是那上帮顶的域名就可以例如 <code>blog.domsia.com</code>,但是每次在上传的过程中，却是没有这个文件的。如果不去修改hexo的代码，最快的途径应该是在deploy之前在public文件夹中添加写好的CNAME文件。当然了这时候部署命令会比较多，统一添加到 <code>package.json</code>  中去，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;scripts&quot;: &#123;</div><div class="line">    &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; echo \&quot;blog.domsia.com\&quot; &gt;  public/CNAME  &amp;&amp; hexo deploy&quot;,</div><div class="line">    &quot;start&quot;: &quot;hexo clean &amp;&amp; hexo s --debug&quot;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p> $  npm start     &nbsp;&nbsp;&nbsp;&nbsp; - - 调试 (支持热加载)</p>
+<p>$ npm run deploy   &nbsp;&nbsp;&nbsp;&nbsp; - -发布</p>
+</blockquote>
+<p>发布后就可以访问了。</p>
+<hr>
+<p>最后贴几个链接:<br>Hexo 官网:  <a href="https://hexo.io" target="_blank" rel="external">https://hexo.io</a><br>git custom domain设置:  <a href="https://help.github.com/articles/quick-start-setting-up-a-custom-domain/" target="_blank" rel="external">https://help.github.com/articles/quick-start-setting-up-a-custom-domain/</a><br>如果你不知道我在干什么:  <a href="https://pages.github.com/" target="_blank" rel="external">https://pages.github.com/</a></p>
+<hr>
+<p><em>今天是520,女朋友去忙了, 好像还是没我什么事</em></p>
+</div></article></div></main><footer><div class="paginator"><a href="/2017/06/buy-computer/" class="prev">PREV</a><a href="/2017/06/docker-swarm-and-weave/" class="next">NEXT</a></div><div id="disqus_thread"></div><script>var disqus_shortname = 'seansun';
+var disqus_identifier = '2017/06/hexo-problems/';
+var disqus_title = 'hexo+github 搭建blog的过程碰到的问题';
+var disqus_url = 'http://blog.domsia.com/2017/06/hexo-problems/';
+(function() {
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();</script><script id="dsq-count-scr" src="//seansun.disqus.com/count.js" async></script><div class="copyright"><p>© 2015 - 2017 <a href="http://blog.domsia.com">domsia</a>, powered by liu0218dong.</p></div></footer></div><script async src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML" integrity="sha384-crwIf/BuaWM9rM65iM+dWFldgQ1Un8jWZMuh3puxb8TOY9+linwLoI7ZHZT+aekW" crossorigin="anonymous"></script><script>(function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;e=o.createElement(i);r=o.getElementsByTagName(i)[0];e.src='//www.google-analytics.com/analytics.js';r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));ga('create',"UA-65933410-1",'auto');ga('send','pageview');</script></body></html>

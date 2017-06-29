@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>domsia</title>
+  <subtitle>liu0218dong blog site</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://blog.domsia.com/"/>
+  <updated>2017-06-28T15:56:19.866Z</updated>
+  <id>http://blog.domsia.com/</id>
+  
+  <author>
+    <name>domsia</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>笔记本规格参数</title>
+    <link href="http://blog.domsia.com/2017/06/buy-computer/"/>
+    <id>http://blog.domsia.com/2017/06/buy-computer/</id>
+    <published>2017-06-29T15:38:38.139Z</published>
+    <updated>2017-06-28T15:56:19.866Z</updated>
+    
+    <content type="html"><![CDATA[<ol>
+<li><p><strong>处理器(CPU)</strong>：AMD的属于很低端的。一般都是Intel I5,I7的，一般都用I5就够了，I7要贵些，速度提升不是太明显，短时间的卡顿或死机一般是CPU过载了。  </p>
+</li>
+<li><p><strong>CPU核数</strong>：也会影响处理速度，一般都是4核。  </p>
+</li>
+<li><p><strong>硬盘</strong>：稍微好一点的现在都用 ＳＳＤ固态硬盘了。价格会比普通硬盘高1000到2000左右，一般容量不会太大，大都是128Ｇ~512Ｇ的，对使用速度的提升很明显。有些电脑也支持扩容，可以自己添加硬盘。  </p>
+</li>
+<li><p><strong>内存</strong>：一般4Ｇ或8G就够用了，大多都可以自己扩容，一个4G内存条的价格大概在200左右，但是厂家的差价一般会在400以上。长时间使用后电脑出现卡顿一般是因为内存不足。  </p>
+</li>
+<li><p><strong>显卡</strong>：显卡的要求一般出现在游戏本上。有集成显卡和独立显卡。  </p>
+</li>
+<li><p><strong>显存</strong>：有些显卡有自己独立存储地方，就是显存。有些电脑和内存是共用空间的，会导致内存容量打折扣。  </p>
+</li>
+<li><p><strong>重量</strong>：超过2kg就有点重了。  </p>
+</li>
+<li><p><strong>屏幕类型</strong>：除了苹果Retina屏幕之外，一般会选FHD（全高清)或IPS，IPS是雾面屏，优点是不会反光。LED屏幕比较节能，但是显示效果不太好。   </p>
+</li>
+<li><p><strong>屏幕大小</strong>：12寸可能稍微有些小，14英寸左右都还可以，15英寸就有点大了。</p>
+</li>
+</ol>
+<hr>
+<p> 其他主要考虑的就是电池容量，散热效果等。<br>一般电子产品都会有一定的次品率，有些检查也不一定检查的出来。不同的厂家，不同的型号，不同的配置，相似的价格优劣也不会太明显，还是要看自己的着重点。<br>轻薄方便还是首要要求，相同配置的价格一般都会比较高。   </p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;处理器(CPU)&lt;/strong&gt;：AMD的属于很低端的。一般都是Intel I5,I7的，一般都用I5就够了，I7要贵些，速度提升不是太明显，短时间的卡顿或死机一般是CPU过载了。  &lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;C
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>hexo+github 搭建blog的过程碰到的问题</title>
+    <link href="http://blog.domsia.com/2017/06/hexo-problems/"/>
+    <id>http://blog.domsia.com/2017/06/hexo-problems/</id>
+    <published>2017-06-29T15:38:38.139Z</published>
+    <updated>2017-06-28T15:56:19.834Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="1-域名解析"><a href="#1-域名解析" class="headerlink" title="1. 域名解析"></a>1. <strong>域名解析</strong></h3><p>本人的域名是万网上注册的，所以域名解析也就用阿里云的了。但是因为之前做过一次对 <code>github.io</code>的解析，用A解析到 github的ip，是直接解析的顶级域名，当时只是做了一个简单的页面，试了一下效果。这次准备用<code>hexo</code> 搭一个可用的博客。按照文档安装配置发布花了不到10分钟时间。但是之后就发现，hexo在配置了git地址之后会删除原来的仓库再新建一个，还好原来的里面也没什么重要信息。之后在修改调试中也发现，每次deploy的时候，会强制push覆盖远程仓库，这个也感觉是个隐患。还是说域名解析的问题，先看配置：</p>
+<table>
+<thead>
+<tr>
+<th>记录类型</th>
+<th style="text-align:center">主机记录</th>
+<th style="text-align:right">解析线路(运营商)</th>
+<th>记录值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CNAME</td>
+<td style="text-align:center">blog</td>
+<td style="text-align:right">默认</td>
+<td>domsia.github.io</td>
+</tr>
+<tr>
+<td>CNAME</td>
+<td style="text-align:center">@</td>
+<td style="text-align:right">默认</td>
+<td>domsia.github.io</td>
+</tr>
+</tbody>
+</table>
+<p>配置完成几分钟后，便可以查看了，打开 <a href="blog.domsia.com">blog.domsia.com</a>没有问题，但是在用 domsia.com 访问的时候却发现还是以前的页面(需要修改repo的custom domain， 怀疑是github server 缓存的原因，也没有再查原因，所以blog的地址就暂定为 blog.domsia.com .</p>
+<h3 id="2-hexo-deploy-的问题"><a href="#2-hexo-deploy-的问题" class="headerlink" title="2.  hexo deploy 的问题"></a>2.  <strong>hexo deploy 的问题</strong></h3><p>之前提到在每次的deploy的时候的强制覆盖问题，这里还引起了另一个问题，就是在repo的设置的<code>custom domain</code>  会被清空，这就需要每发布一次设置一次，这十分不友好。还好git还提供了另一种域名绑定策略，那就是添加一个 <code>CNAME</code> 文件，在里面只需要写是那上帮顶的域名就可以例如 <code>blog.domsia.com</code>,但是每次在上传的过程中，却是没有这个文件的。如果不去修改hexo的代码，最快的途径应该是在deploy之前在public文件夹中添加写好的CNAME文件。当然了这时候部署命令会比较多，统一添加到 <code>package.json</code>  中去，如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&quot;scripts&quot;: &#123;</div><div class="line">    &quot;deploy&quot;: &quot;hexo clean &amp;&amp; hexo generate &amp;&amp; echo \&quot;blog.domsia.com\&quot; &gt;  public/CNAME  &amp;&amp; hexo deploy&quot;,</div><div class="line">    &quot;start&quot;: &quot;hexo clean &amp;&amp; hexo s --debug&quot;</div><div class="line">  &#125;</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p> $  npm start     &nbsp;&nbsp;&nbsp;&nbsp; - - 调试 (支持热加载)</p>
+<p>$ npm run deploy   &nbsp;&nbsp;&nbsp;&nbsp; - -发布</p>
+</blockquote>
+<p>发布后就可以访问了。</p>
+<hr>
+<p>最后贴几个链接:<br>Hexo 官网:  <a href="https://hexo.io" target="_blank" rel="external">https://hexo.io</a><br>git custom domain设置:  <a href="https://help.github.com/articles/quick-start-setting-up-a-custom-domain/" target="_blank" rel="external">https://help.github.com/articles/quick-start-setting-up-a-custom-domain/</a><br>如果你不知道我在干什么:  <a href="https://pages.github.com/" target="_blank" rel="external">https://pages.github.com/</a></p>
+<hr>
+<p><em>今天是520,女朋友去忙了, 好像还是没我什么事</em></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;1-域名解析&quot;&gt;&lt;a href=&quot;#1-域名解析&quot; class=&quot;headerlink&quot; title=&quot;1. 域名解析&quot;&gt;&lt;/a&gt;1. &lt;strong&gt;域名解析&lt;/strong&gt;&lt;/h3&gt;&lt;p&gt;本人的域名是万网上注册的，所以域名解析也就用阿里云的了。但是因为之前做
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>docker swarm and weaveworks 搭建分布式容器环境</title>
+    <link href="http://blog.domsia.com/2017/06/docker-swarm-and-weave/"/>
+    <id>http://blog.domsia.com/2017/06/docker-swarm-and-weave/</id>
+    <published>2017-06-29T15:38:38.139Z</published>
+    <updated>2017-06-28T15:56:19.890Z</updated>
+    
+    <content type="html"><![CDATA[<ol>
+<li><p><strong>理念</strong><br><a href="https://github.com/docker/swarm" target="_blank" rel="external"> Docker Swarm</a> 是docker官方一个用于创建Docker主机（运行Docker守护进程的服务器）集群的工具。相对于<a href="https://kubernetes.io/" target="_blank" rel="external">kubernetes</a> ，其概念较少，无需额外安装，能够满足很多场景的需求。但是docker集群的网络通信是一件非常复杂的事，对应用隔离以及物理机通信要求较高，本环境使用了<a href="https://www.weave.works" target="_blank" rel="external">weaveworks</a> 管理和解析网络。<br>在docker集群中，需要做到一个应用的所有服务位于同一局域网内，而于其他服务之间是相互隔离的，同时物理机与物理机之间也应具有相同的应用网络结构，才能使不同机器上的同一应用处在同一通信网络下面，从而实现分布式的功能。</p>
+</li>
+<li><p><strong>环境搭建</strong> </p>
+</li>
+</ol>
+<ul>
+<li><p>docker 安装<br>在host1机器上安装较新版本的docker，自带docker swarm. 若docker版本较老需要自己升级或者手动安装。若命令 <code>docker swarm</code>存在，则说明安装成功。本次使用的docker版本是<code>17.05.0-ce</code> </p>
+</li>
+<li><p>安装weaveworks插件<br>在host1机器上运行<code>docker plugin install weaveworks/net-plugin</code> ,可能需要sudo权限。安装过程会拉取docker镜像。完成之后，使用<code>docker plugin ls</code> 检查是否安装成功。插件会自动处于enabled的状态。  </p>
+</li>
+<li><p>host2机器的安装配置<br>在host2机器上同样进行上两步操作。  </p>
+</li>
+<li><p>创建集群节点<br>将host1机器做为manager，执行<code>docker swarm init</code> 若本地外网IP较多，需要添加 <code>--advertise-addr IP</code>参数选择一个外网的IP（错误提示会指出）。若初始化成功，会生成一段提示  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">To add a worker to this swarm, run the following command:</div><div class="line"></div><div class="line"> docker swarm join \</div><div class="line">  --token    SWMTKN-1-2msed5ddrd4tmzitijhcn6w040h8hh1gntmxhtc2ugqv3c31t7-1fo2fpnyiu8hq4seqan7d9zcm \</div><div class="line">  192.168.0.109:2377</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>下面这段命令便是将其他物理机作为worker节点添加到集群的方法。使用<code>docker node ls</code>查看集群节点状态，发现目前只有一个manager节点。在host2上执行上述添加命令，成功后。在host1上再次查看节点状态，发现有两个节点了，并且两个节点都处于ready的状态，即节点添加成功。 </p>
+<ul>
+<li><p>创建网络<br>使用<code>docker network ls</code>查看当前docker可使用的网络连接。我们需要创建weaveworks为我们管理的网络连接方式。执行<code>docker network create -d weaveworks/net-plugin:latest  distributed_default</code> 创建了名额为 distributed_default的网络。在启动服务的时候，我们需要指定使用此网络连接方式。在这里每个通过weaveworks创建的网络之间都是相互隔离的，保证了应用之间的隔离性。</p>
+</li>
+<li><p>启动服务<br>我们这里启动一个最简单的nginx服务，<code>docker service create --network distributed_default --replicas 4 nginx</code>会启动一个有4个task的集群服务。使用<code>docker ps</code>查看发现host1上出现了两个nginx镜像产生的容器。同样在host2也部署了两个nginx的容器，共4个.在host2上，查看网络发现多了一个叫distributed_default的网络结构名。至此，一个最简单的双机系统洁本结构已经完成，接下来就需要进行一些测试和评估了.</p>
+</li>
+</ul>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;ol&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;理念&lt;/strong&gt;&lt;br&gt;&lt;a href=&quot;https://github.com/docker/swarm&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt; Docker Swarm&lt;/a&gt; 是docker官方一个用于创
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>coffeescript 速览</title>
+    <link href="http://blog.domsia.com/2017/06/coffeescript-quickstart/"/>
+    <id>http://blog.domsia.com/2017/06/coffeescript-quickstart/</id>
+    <published>2017-06-28T17:23:21.541Z</published>
+    <updated>2017-06-28T15:56:19.854Z</updated>
+    
+    <content type="html"><![CDATA[<p>作为一个已经放弃前端的人，我其实是不太想在碰这些东西的，但是因为sageMathCloud这个开源项目基本都是用<code>coffeescript</code>写的，没办法，还是要看，也许还有不一样的发现呢。<br>CoffeeScript 是一门编译到 JavaScript 的小巧语言，它借鉴了Ruby，python和Haskell的语法，代码可以一一对应的编译到JS，也可以使用已有的各种JS类库。它语法简洁，相对于JS有较高的安全性。</p>
+<p>安装：</p>
+<blockquote>
+<p> $ sudo npm install -g coffee-script</p>
+</blockquote>
+<p>对我来说， 学习这门语言最大的好处就是，深入理解了很多JS存在的问题以及在JS代码中需要注意的各种问题。</p>
+<p>例如：使用 JavaScript 循环生成函数的时候, 经常会添加一个闭包来包裹代码, 这样做目的是为了循环的变量被保存起来, 而不是所有生成的函数搜去访问最后一个循环的变量. CoffeeScript 提供了一个 do 关键字, 用来直接调用跟在后边的函数, 并且传递需要的参数.<br><figure class="highlight coffeescript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> filename <span class="keyword">in</span> list</div><div class="line">  <span class="keyword">do</span> (filename) -&gt;</div><div class="line">    fs.readFile filename, <span class="function"><span class="params">(err, contents)</span> -&gt;</span></div><div class="line">      compile filename, contents.toString()</div></pre></td></tr></table></figure></p>
+<p>编译后的JS代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Generated by CoffeeScript 1.12.6</span></div><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> filename, fn, i, len;</div><div class="line"></div><div class="line">  fn = <span class="function"><span class="keyword">function</span>(<span class="params">filename</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> fs.readFile(filename, <span class="function"><span class="keyword">function</span>(<span class="params">err, contents</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> compile(filename, contents.toString());</div><div class="line">    &#125;); </div><div class="line">  &#125;;  </div><div class="line">  <span class="keyword">for</span> (i = <span class="number">0</span>, len = list.length; i &lt; len; i++) &#123;</div><div class="line">    filename = list[i];</div><div class="line">    fn(filename);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">&#125;).call(<span class="keyword">this</span>);</div></pre></td></tr></table></figure></p>
+<p>可以发现相比于js代码，coffeeScript简洁了不少，语法也更清晰。还有其它如类，继承等，都做了简化和改进，当然了ES6在这方面也做了很多的工作。具体的入门中文版地址： <a href="http://coffee-script.org" target="_blank" rel="external">http://coffee-script.org</a></p>
+<hr>
+<p>果然看看还是有好处的，比如：</p>
+<ol>
+<li><p>source map<br>js脚本大部分源码（尤其是各种函数库和框架）都要经过转换，才能投入生产环境。<br>常见的源码转换，主要是以下三种情况：<br>　　（1）压缩，减小体积。比如jQuery 1.9的源码，压缩前是252KB，压缩后是32KB。<br>　　（2）多个文件合并，减少HTTP请求数。<br>　　（3）其他语言编译成JavaScript。最常见的例子就是CoffeeScript。<br>source map就是通过转化后的代码找到对应的原始位置。对应的原理有 VLQ 编码。<br><a href="https://www.html5rocks.com/en/tutorials/developertools/sourcemaps/" target="_blank" rel="external">Introduction to JavaScript Source Maps</a><br><a href="http://coffee-script.org/documentation/docs/sourcemap.html" target="_blank" rel="external">coffeescript source map: SOURCEMAP.LITCOFFEE</a> </p>
+</li>
+<li><p>jison<br>JavaScript的解析器， Coffee就是用<a href="https://github.com/zaach/jison" target="_blank" rel="external">Jison</a> 解析的。它将一个上下文无关的语法做为输入，输出对应的JavaScript代码。<br>简单的例子：通过 <a href="https://github.com/zaach/jison/blob/master/examples/calculator.jison" target="_blank" rel="external">calculator.jison</a> 生成parsers:  </p>
+<blockquote>
+<p> $  jison calculator.jison   </p>
+</blockquote>
+<p>  执行后生成了calculator.js 文件，执行这个文件，将会将会parse一个输入文件，计算其内容  </p>
+<blockquote>
+<p> $ echo “2^32 / 1024” &gt; testcalc<br> $ node calculator.js testcalc</p>
+</blockquote>
+<p>   将会得到结果 <code>4194304</code></p>
+<hr>
+<p>了解和学习下来，感觉coffee在语法简洁上的改进的意义远远大于其它方面，使用者也大都是那些用了很长时间的js的开发者，能让他们更好的专注于业务而不用去折腾那种java风格的js代码。</p>
+</li>
+</ol>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;作为一个已经放弃前端的人，我其实是不太想在碰这些东西的，但是因为sageMathCloud这个开源项目基本都是用&lt;code&gt;coffeescript&lt;/code&gt;写的，没办法，还是要看，也许还有不一样的发现呢。&lt;br&gt;CoffeeScript 是一门编译到 JavaScri
+    
+    </summary>
+    
+    
+  </entry>
+  
+</feed>
