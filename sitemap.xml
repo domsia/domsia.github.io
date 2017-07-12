@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.domsia.com/2017/07/note/</loc>
+    
+    <lastmod>2017-07-12T10:33:50.226Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.domsia.com/2017/07/swarm-dask-cluster-problems/</loc>
+    
+    <lastmod>2017-07-08T17:53:55.084Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.domsia.com/2017/06/docker-swarm-and-weave/</loc>
     
-    <lastmod>2017-06-28T15:56:19.890Z</lastmod>
+    <lastmod>2017-06-30T15:57:29.478Z</lastmod>
     
   </url>
   
